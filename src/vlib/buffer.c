@@ -300,8 +300,15 @@ static struct
 };
 /* *INDENT-ON* */
 
-vlib_main_t **vlib_mains = &__bootstrap_vlib_main_vector.vm;
+vlib_main_t **vlib_mains;
 
+static void __vlib_buffer_init_vlib_mains (void)
+    __attribute__((__constructor__)) ;
+static void
+__vlib_buffer_init_vlib_mains (void)
+{
+    vlib_mains = &__bootstrap_vlib_main_vector.vm;
+}
 
 /* When dubugging validate that given buffers are either known allocated
    or known free. */
